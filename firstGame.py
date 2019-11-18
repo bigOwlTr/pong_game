@@ -28,7 +28,7 @@ vel = 9    # the interval by which the ball moves
 numTargets = 11
 numTargetsPerRow = 7
 target_x = {x: (63 + x * 80) for x in range(numTargets)}
-
+target_x2 = {x: (63 + x * 80) for x in range(numTargets)}
 
 #for x in range(numTargets):
 #    target['xpos'][x]= 100
@@ -37,8 +37,9 @@ target_x = {x: (63 + x * 80) for x in range(numTargets)}
 
 
 target_y = {x: 0 for x in range(numTargets)}
+target_y2 = {x: 42 for x in range(numTargets)}
 colour = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
-
+colour2 = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
 ball_width = 20              # ball variables to make other statements easyer
 ball_radius = 20
 ball_x = int(screen_width/2)
@@ -50,7 +51,7 @@ ball_moving_left = False
 ball_moving_right = False
 
 target_not_hit = {x: True for x in range(14)}
-
+target_not_hit2 = {x: True for x in range(14)}
 run = True       # the main loop that updates everything
 while run:
     pygame.time.delay(15)   # millisecond delay so that the loop isn't too fast
@@ -114,6 +115,19 @@ while run:
 
         if target_not_hit[target]:   # the target 1 will only show if it hasn't been hit, it will disappear
             pygame.draw.rect(window, colour[target], (target_x[target], target_y[target], 75, 37))
+
+    for target in range(numTargets):
+        if target_x2[target] <= ball_x <= target_x2[target] + 100 and target_y2[target] + 50 >= ball_y >= target_y2[target] and target_not_hit2[target]:
+            ball_y_vel = ball_y_vel * -1
+            # ball hits the target (blue) it bounces and says the target is hit 1
+            target_not_hit2[target] = False
+
+        if 200 - ball_radius < ball_y < 50 + ball_radius and target_x2[target] < ball_x < target_x2[target] + 100 and target_not_hit2[target]:
+            ball_x_vel = ball_x_vel * -1  # ball bounces off the sides of the target 2
+            target_not_hit2[target] = False
+
+        if target_not_hit2[target]:  # the target 1 will only show if it hasn't been hit, it will disappear
+            pygame.draw.rect(window, colour2[target], (target_x2[target], target_y2[target], 75, 37))
 
     pygame.draw.rect(window, Red, (x, y, width, hight))  # draws the paddle
     pygame.draw.circle(window, (255, 255, 255), (ball_x, ball_y), ball_radius, ball_width)  # draws the ball
