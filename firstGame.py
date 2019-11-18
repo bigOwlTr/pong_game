@@ -25,9 +25,9 @@ y = screen_hight - 70
 hight = 20
 vel = 9    # the interval by which the ball moves
 
-numTargets = 14
+numTargets = 11
 numTargetsPerRow = 7
-target_x = {x: (100 + x * 105) for x in range(numTargets)}
+target_x = {x: (63 + x * 80) for x in range(numTargets)}
 
 
 #for x in range(numTargets):
@@ -39,12 +39,12 @@ target_x = {x: (100 + x * 105) for x in range(numTargets)}
 target_y = {x: 0 for x in range(numTargets)}
 colour = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
 
-ball_width = 0                          # ball variables to make other statements easyer
+ball_width = 20              # ball variables to make other statements easyer
 ball_radius = 20
 ball_x = int(screen_width/2)
 ball_y = int(screen_hight - (70 + ball_radius))
-ball_y_vel = 2
-ball_x_vel = 2
+ball_y_vel = 1
+ball_x_vel = 1
 
 ball_moving_left = False
 ball_moving_right = False
@@ -113,7 +113,7 @@ while run:
             target_not_hit[target] = False
 
         if target_not_hit[target]:   # the target 1 will only show if it hasn't been hit, it will disappear
-            pygame.draw.rect(window, colour[target], (target_x[target], target_y[target], 100, 50))
+            pygame.draw.rect(window, colour[target], (target_x[target], target_y[target], 75, 37))
 
     pygame.draw.rect(window, Red, (x, y, width, hight))  # draws the paddle
     pygame.draw.circle(window, (255, 255, 255), (ball_x, ball_y), ball_radius, ball_width)  # draws the ball
