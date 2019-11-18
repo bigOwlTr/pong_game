@@ -117,12 +117,12 @@ while run:
             pygame.draw.rect(window, colour[target], (target_x[target], target_y[target], 75, 37))
 
     for target in range(numTargets):
-        if target_x2[target] <= ball_x <= target_x2[target] + 100 and target_y2[target] + 50 >= ball_y >= target_y2[target] and target_not_hit2[target]:
+        if target_x2[target] <= ball_x <= target_x2[target] + 75 and target_y2[target] + 37 >= ball_y >= target_y2[target] and target_not_hit2[target]:
             ball_y_vel = ball_y_vel * -1
             # ball hits the target (blue) it bounces and says the target is hit 1
             target_not_hit2[target] = False
 
-        if 200 - ball_radius < ball_y < 50 + ball_radius and target_x2[target] < ball_x < target_x2[target] + 100 and target_not_hit2[target]:
+        if 200 - ball_radius < ball_y < 37 + ball_radius and target_x2[target] < ball_x < target_x2[target] + 75 and target_not_hit2[target]:
             ball_x_vel = ball_x_vel * -1  # ball bounces off the sides of the target 2
             target_not_hit2[target] = False
 
