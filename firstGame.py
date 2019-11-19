@@ -11,7 +11,7 @@ left_count = 0    # counts how many times the bar has been moved in a direction
 right_count = 0
 
 screen_width = 1000
-screen_hight = 550
+screen_hight = 800
 Red = (255, 0, 0)
 Black = (0, 0, 0)
 White = (255, 255, 255)
@@ -23,13 +23,13 @@ width = 100                      # sizes and coords for the paddle
 x = screen_width/2 - width/2
 y = screen_hight - 70
 hight = 20
-vel = 9    # the interval by which the ball moves
+vel = 9    # the interval by which the paddle moves
 
 numTargets = 11
 numTargetsPerRow = 7
 target_x = {x: (63 + x * 80) for x in range(numTargets)}
 target_x2 = {x: (63 + x * 80) for x in range(numTargets)}
-
+target_x3 = {x: (63 + x * 80) for x in range(numTargets)}
 #for x in range(numTargets):
 #    target['xpos'][x]= 100
 #    target['ypos'][x]= 55
@@ -38,20 +38,23 @@ target_x2 = {x: (63 + x * 80) for x in range(numTargets)}
 
 target_y = {x: 0 for x in range(numTargets)}
 target_y2 = {x: 42 for x in range(numTargets)}
+target_y3 = {x: 84 for x in range(numTargets)}
 colour = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
 colour2 = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
+colour3 = {x: (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for x in range(numTargets*2)}
 ball_width = 20              # ball variables to make other statements easyer
 ball_radius = 20
 ball_x = int(screen_width/2)
 ball_y = int(screen_hight - (70 + ball_radius))
-ball_y_vel = 1
-ball_x_vel = 1
+ball_y_vel = 2
+ball_x_vel = 2
 
 ball_moving_left = False
 ball_moving_right = False
 
 target_not_hit = {x: True for x in range(14)}
 target_not_hit2 = {x: True for x in range(14)}
+target_not_hit3 = {x: True for x in range(14)}
 run = True       # the main loop that updates everything
 while run:
     pygame.time.delay(15)   # millisecond delay so that the loop isn't too fast
@@ -128,6 +131,20 @@ while run:
 
         if target_not_hit2[target]:  # the target 1 will only show if it hasn't been hit, it will disappear
             pygame.draw.rect(window, colour2[target], (target_x2[target], target_y2[target], 75, 37))
+
+    for target in range(numTargets):
+        if target_x3[target] <= ball_x <= target_x3[target] + 75 and target_y3[target] + 37 >= ball_y >= target_y3[target] and target_not_hit3[target]:
+            ball_y_vel = ball_y_vel * -1
+            # ball hits the target (blue) it bounces and says the target is hit 1
+            target_not_hit3[target] = False
+
+        if 200 - ball_radius < ball_y < 37 + ball_radius and target_x3[target] < ball_x < target_x3[target] + 75 and target_not_hit3[target]:
+            ball_x_vel = ball_x_vel * -1  # ball bounces off the sides of the target 2
+            target_not_hit3[target] = False
+
+        if target_not_hit3[target]:  # the target 1 will only show if it hasn't been hit, it will disappear
+            pygame.draw.rect(window, colour3[target], (target_x3[target], target_y3[target], 75, 37))
+
 
     pygame.draw.rect(window, Red, (x, y, width, hight))  # draws the paddle
     pygame.draw.circle(window, (255, 255, 255), (ball_x, ball_y), ball_radius, ball_width)  # draws the ball
